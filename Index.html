@@ -576,12 +576,7 @@ input[type="file"] { display: none; }
                updateActiveButtons('shape', data.shape);
             }
 
-  // Ye naya block font ke liye add karein
-if(data.font) {
-  localStorage.setItem('qaida_font', data.font);
-  document.body.style.fontFamily = data.font; // Font apply karne ka code
-  //updateActiveButtons('font', data.font); // Agar UI mein font ke buttons highlight karne hain
-}
+
             saveDBLocal(); // Save locally without pushing back
             renderApp();
          }
@@ -593,7 +588,7 @@ if(data.font) {
       database.ref('qaidaAppData').set({
          db: APP_DATA,
          shape: localStorage.getItem('qaida_shape') || 'shape-rounded'
-        font: localStorage.getItem('qaida_font') || 'default-font' 
+         
       });
     }
     

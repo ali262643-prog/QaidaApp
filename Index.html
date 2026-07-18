@@ -573,14 +573,14 @@ input[type="file"] { display: none; }
                localStorage.setItem('qaida_shape', data.shape);
                document.body.className = document.body.className.replace(/shape-\w+/g, '').trim();
                document.body.classList.add(data.shape);
-               //updateActiveButtons('shape', data.shape);
+               updateActiveButtons('shape', data.shape);
             }
 
   / Ye naya block font ke liye add karein
 if(data.font) {
   localStorage.setItem('qaida_font', data.font);
   document.body.style.fontFamily = data.font; // Font apply karne ka code
-  updateActiveButtons('font', data.font); // Agar UI mein font ke buttons highlight karne hain
+  //updateActiveButtons('font', data.font); // Agar UI mein font ke buttons highlight karne hain
 }
             saveDBLocal(); // Save locally without pushing back
             renderApp();

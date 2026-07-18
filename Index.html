@@ -1,0 +1,1295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultmessages='false' b:layoutsVersion='3' b:responsive='true' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<meta content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no' name='viewport'/>
+<title>Ultimate Qaida App | QURAN LEARNING PORTAL</title>
+
+<link href='https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&amp;family=Noto+Naskh+Arabic:wght@400;700&amp;family=Scheherazade+New:wght@400;700&amp;family=Reem+Kufi:wght@400;700&amp;family=Lateef&amp;family=Harmattan:wght@400;700&amp;family=Katibeh&amp;family=Mirza:wght@400;700&amp;family=Aref+Ruqaa:wght@400;700&amp;family=Tajawal:wght@400;700&amp;family=Cairo:wght@400;700&amp;family=Almarai:wght@400;700&amp;family=Markazi+Text:wght@400;700&amp;family=Vazirmatn:wght@400;700&amp;family=El+Messiri:wght@400;700&amp;family=Nunito:wght@400;600;800&amp;family=Poppins:wght@300;400;600&amp;display=swap' rel='stylesheet'/>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'/>
+<!-- Particle Blast Library -->
+<script src='https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js'/>
+
+<!-- Firebase SDKs -->
+<script src='https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js'/>
+<script src='https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js'/>
+
+<b:skin><![CDATA[
+/*------------------------------------------------------------
+  ULTIMATE QAIDA APP - ADVANCED DYNAMIC ENGINE
+------------------------------------------------------------*/
+:root {
+  /* Dynamic Variables */
+  --primary-color: #00e5ff;
+  --primary-glow: rgba(0, 229, 255, 0.4);
+  --letter-color: inherit;
+  --card-height: 160px; /* NEW: Dynamic Card Height */
+  
+  /* Base Variables */
+  --bg-main: #0a0b0e;
+  --bg-panel: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --text-main: #ffffff;
+  --text-muted: #a0aec0;
+  
+  --font-arabic: 'Amiri', serif; /* Default */
+  --font-ui: 'Poppins', sans-serif;
+  --card-radius: 20px;
+  --char-size: 4rem;
+}
+
+/* ================= FONT SELECTIONS (15 Fonts Total) ================= */
+body.font-amiri { --font-arabic: 'Amiri', serif; }
+body.font-noto { --font-arabic: 'Noto Naskh Arabic', serif; }
+body.font-scheherazade { --font-arabic: 'Scheherazade New', serif; }
+body.font-reem { --font-arabic: 'Reem Kufi', sans-serif; }
+body.font-lateef { --font-arabic: 'Lateef', serif; }
+body.font-harmattan { --font-arabic: 'Harmattan', sans-serif; }
+body.font-katibeh { --font-arabic: 'Katibeh', serif; }
+body.font-mirza { --font-arabic: 'Mirza', serif; }
+body.font-aref { --font-arabic: 'Aref Ruqaa', serif; }
+body.font-tajawal { --font-arabic: 'Tajawal', sans-serif; }
+body.font-cairo { --font-arabic: 'Cairo', sans-serif; }
+body.font-almarai { --font-arabic: 'Almarai', sans-serif; }
+body.font-markazi { --font-arabic: 'Markazi Text', serif; }
+body.font-vazirmatn { --font-arabic: 'Vazirmatn', sans-serif; }
+body.font-messiri { --font-arabic: 'El Messiri', sans-serif; }
+
+/* ================= THEMES ================= */
+body.theme-light {
+  --bg-main: #f4f7f6;
+  --bg-panel: #ffffff;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --text-main: #111827;
+  --text-muted: #4b5563;
+}
+body.theme-neon {
+  --bg-main: #000000;
+  --bg-panel: #050505;
+  --border-color: var(--primary-glow);
+}
+body.theme-neon .letter-card {
+  box-shadow: 0 0 15px var(--primary-glow), inset 0 0 10px var(--primary-glow);
+}
+
+/* ================= ADMIN MODE SYSTEM ================= */
+.admin-only { display: none !important; }
+body.admin-mode .admin-block { display: block !important; }
+body.admin-mode .admin-flex { display: flex !important; }
+body.admin-mode .admin-grid { display: grid !important; }
+body.admin-mode .admin-inline { display: inline-block !important; }
+
+/* ================= VIEW STYLES ================= */
+body.style-kids {
+  --font-ui: 'Nunito', sans-serif;
+  --card-radius: 35px;
+  --bg-main: #0d0614;
+  --bg-panel: #1a0f2e;
+  --text-main: #ffffff;
+  --char-size: 6.5rem;
+  --border-color: rgba(255,255,255,0.05);
+}
+body.style-kids .letter-card { box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+body.style-kids .letter-card:hover { transform: scale(1.08) rotate(3deg); }
+body.style-elders { --char-size: 5.5rem; }
+body.style-elders .letter-name { font-size: 1.2rem; font-weight: bold; }
+body.style-focus .letter-name { display: none; }
+body.style-focus .arabic-char { font-size: 5.5rem; margin-top: 10px; }
+
+/* ================= LETTER BOX SHAPES ================= */
+.shape-square .letter-card { border-radius: 5px; }
+.shape-rounded .letter-card { border-radius: 25px; }
+.shape-circle .letter-card { border-radius: 50%; aspect-ratio: 1/1; }
+
+.shape-leaf .letter-card { border-radius: 40px 5px 40px 5px; }
+.shape-pill .letter-card { border-radius: 50px; }
+.shape-arch .letter-card { border-radius: 40px 40px 8px 8px; }
+.shape-inv-arch .letter-card { border-radius: 8px 8px 40px 40px; }
+.shape-blob .letter-card { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+
+/* ================= INTERACTION EFFECTS ================= */
+.effect-glow { box-shadow: 0 0 40px var(--primary-color), inset 0 0 20px var(--primary-color) !important; background: var(--primary-glow) !important; transform: scale(1.1) !important; border-color: var(--primary-color) !important; }
+.effect-enlarge { transform: scale(1.4) !important; z-index: 10; box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important; }
+.effect-round { border-radius: 50% !important; transform: rotate(360deg) scale(1.1) !important; background: var(--primary-glow) !important; }
+
+/* ================= ENTRY ANIMATIONS ================= */
+@keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes slideUp { 0% { transform: translateY(50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+@keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+.anim-pop .letter-card { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards; }
+.anim-slide .letter-card { animation: slideUp 0.5s ease-out backwards; }
+.anim-fade .letter-card { animation: fadeIn 0.8s ease backwards; }
+
+/* ================= CORE STYLES ================= */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  background: var(--bg-main); color: var(--text-main); font-family: var(--font-ui);
+  margin: 0; padding: 0; height: 100vh; height: 100dvh; width: 100vw; overflow: hidden;
+  display: flex; flex-direction: column; transition: background 0.4s ease, color 0.4s ease;
+  background-position: center; background-size: cover; background-attachment: fixed;
+}
+.main-stage { flex: 1; padding: 20px 20px 160px 20px; overflow-y: auto; position: relative; -webkit-overflow-scrolling: touch; }
+.lesson-header { text-align: center; margin-bottom: 25px; cursor: pointer; user-select: none; }
+.lesson-title { font-size: 2rem; margin: 0; color: var(--primary-color); transition: color 0.3s;}
+
+/* Modified Grid for Horizontal Stretching */
+.qaida-grid { 
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 20px; 
+  direction: rtl; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
+
+@media (max-width: 650px) {
+  .qaida-grid { gap: 10px; }
+  .lesson-title { font-size: 1.5rem; } :root { --char-size: 3rem; }
+}
+
+.letter-card {
+  background: var(--bg-panel); border: 2px solid var(--border-color);
+  padding: 20px 5px; text-align: center; cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); position: relative;
+  backdrop-filter: blur(5px);
+  
+  height: var(--card-height);
+  min-width: 150px;
+  flex: 1 1 auto;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
+}
+.letter-card:hover { border-color: var(--primary-color); }
+.arabic-char { font-family: var(--font-arabic); font-size: var(--char-size); color: var(--letter-color, var(--text-main)); line-height: 1.2; transition: all 0.3s; width: 100%; text-align: center; }
+.letter-name { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; transition: all 0.3s; }
+
+/* ================= BOTTOM NAVIGATION ================= */
+.bottom-nav {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--bg-panel); backdrop-filter: blur(15px); border: 1px solid var(--border-color);
+  padding: 10px 20px; border-radius: 40px; display: flex; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 100;
+}
+.nav-btn { background: transparent; border: none; color: var(--text-main); font-size: 1.3rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: color 0.3s; }
+.nav-btn span { font-size: 0.55rem; margin-top: 4px; font-family: var(--font-ui); text-transform: uppercase; letter-spacing: 0.5px;}
+.nav-btn:hover { color: var(--primary-color); }
+.nav-btn.play-btn { color: var(--primary-color); transform: scale(1.15); margin: -8px 5px 0 5px;}
+
+/* ================= MODALS & SETTINGS ================= */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 200; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+.modal-overlay.active { display: flex; opacity: 1; }
+.modal-content { background: var(--bg-main); border: 1px solid var(--border-color); width: 90%; max-width: 600px; max-height: 85vh; border-radius: 25px; padding: 30px; overflow-y: auto; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+.close-modal { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; z-index: 10; }
+.settings-group { margin-bottom: 25px; }
+.settings-group h3 { margin: 0 0 15px 0; font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;}
+.opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.opt-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+.color-picker { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;}
+.color-dot { width: 35px; height: 35px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.color-dot:hover { transform: scale(1.2); }
+.toggle-btn { background: var(--bg-panel); color: var(--text-main); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px; text-align: center; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.toggle-btn i { font-size: 1.2rem; }
+.toggle-btn:hover { background: rgba(255,255,255,0.05); }
+.toggle-btn.active-opt { border-color: var(--primary-color); color: var(--primary-color); background: rgba(0, 229, 255, 0.05); }
+.admin-btn { background: var(--primary-color); color: #000; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
+.admin-btn:hover { filter: brightness(1.1); }
+.admin-btn.danger { background: #ff4757; color: #fff; }
+.lesson-list-btn { background: var(--bg-panel); border: 1px solid var(--border-color); color: var(--text-main); padding: 15px; width: 100%; text-align: left; border-radius: 12px; margin-bottom: 10px; cursor: pointer; font-size: 1.1rem; display: flex; justify-content: space-between; }
+
+/* Builder Inputs for New Modals */
+.builder-item { background: var(--bg-panel); padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); }
+.builder-item label { display: block; margin: 10px 0 5px 0; font-size: 0.9rem; color: var(--text-muted); text-align: left; }
+.builder-input { width: 100%; padding: 10px; margin-bottom: 5px; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 5px; font-family: inherit;}
+
+/* Custom Background UI */
+.bg-preset-grid { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
+.bg-preset { min-width: 80px; height: 60px; border-radius: 10px; border: 2px solid var(--border-color); cursor: pointer; background-size: cover; background-position: center; transition: 0.2s;}
+.bg-preset:hover { border-color: var(--primary-color); transform: scale(1.05); }
+.file-upload-label { display: block; background: var(--bg-panel); color: var(--text-main); padding: 12px; text-align: center; border-radius: 10px; border: 1px dashed var(--border-color); cursor: pointer; margin-bottom:10px; transition: 0.3s; }
+.file-upload-label:hover { border-color: var(--primary-color); color: var(--primary-color); }
+input[type="file"] { display: none; }
+
+/* Quiz & Trophy UI */
+.quiz-stage { text-align: center; }
+.quiz-char { font-family: var(--font-arabic); font-size: 6rem; color: var(--primary-color); margin-bottom: 20px;}
+.quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.quiz-opt-btn { background: var(--bg-panel); border: 2px solid var(--border-color); color: var(--text-main); padding: 15px; border-radius: 15px; font-size: 1.2rem; cursor: pointer; transition: 0.2s; }
+.quiz-opt-btn:hover { background: var(--primary-color); color: #000; }
+.quiz-header-buttons { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+.quiz-mode-btn { background: var(--bg-panel); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px; border-radius: 10px; cursor: pointer; flex: 1; }
+.quiz-mode-btn.active { background: var(--primary-color); color: #000; border-color: var(--primary-color); font-weight: bold; }
+.score-badge { font-size: 1.2rem; font-weight: bold; color: var(--primary-color); margin-bottom: 10px; }
+
+/* Trophy Winner Screen */
+.trophy-container { display: none; flex-direction: column; align-items: center; justify-content: center; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 10; border-radius: 25px; backdrop-filter: blur(10px); }
+.trophy-icon { font-size: 8rem; color: #f1c40f; animation: trophyGlow 2s infinite alternate, popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-shadow: 0 0 50px #f1c40f; margin-bottom: 20px; }
+.winner-text { font-size: 2.5rem; font-weight: 800; color: #fff; text-transform: uppercase; animation: textGlow 1.5s infinite alternate; letter-spacing: 2px; text-shadow: 0 0 20px var(--primary-color); }
+@keyframes trophyGlow { 0% { transform: scale(1); filter: drop-shadow(0 0 20px #f1c40f); } 100% { transform: scale(1.1); filter: drop-shadow(0 0 60px #f1c40f); } }
+@keyframes textGlow { 0% { text-shadow: 0 0 10px var(--primary-color); } 100% { text-shadow: 0 0 40px var(--primary-color), 0 0 80px #00e5ff; } }
+
+/* Tajweed Animations - Kept Intact */
+.rule-selectors { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; margin-bottom: 20px; }
+.rule-btn { background: var(--bg-panel); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 20px; cursor: pointer; white-space: nowrap; }
+.rule-btn.active-rule { background: var(--primary-color); color: #000; font-weight: bold; }
+.anim-stage-container { background: #111; border: 2px solid var(--primary-color); border-radius: 20px; height: 280px; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+.anim-qalqala { display: none; flex-direction: column; align-items: center; }
+.qalqala-ball { width: 40px; height: 40px; background: var(--primary-color); border-radius: 50%; animation: bounce 0.8s infinite alternate cubic-bezier(0.5,0.05,1,0.5); box-shadow: 0 0 15px var(--primary-color); }
+.qalqala-base { width: 100px; height: 5px; background: rgba(255,255,255,0.2); border-radius: 50%; margin-top: 120px; }
+.qalqala-char { font-family: var(--font-arabic); font-size: 3rem; color: #fff; position: absolute; bottom: 20px; animation: textEcho 1.6s infinite; }
+@keyframes bounce { 0% { transform: translateY(-100px); } 100% { transform: translateY(110px) scaleY(0.7); } }
+@keyframes textEcho { 0%, 45% { text-shadow: 0 0 0px transparent; transform: scale(1); } 50% { text-shadow: 0 0 30px var(--primary-color); transform: scale(1.3); color: var(--primary-color); } 100% { text-shadow: 0 0 0px transparent; transform: scale(1); } }
+.anim-ghunna { display: none; position: relative; }
+.face-icon { font-size: 8rem; color: #333; }
+.nose-glow { position: absolute; top: 40%; right: 10%; width: 30px; height: 30px; background: var(--primary-color); border-radius: 50%; filter: blur(10px); animation: pulseGlow 1.5s infinite alternate; }
+.ghunna-waves { position: absolute; top: 20%; right: -30%; font-size: 2rem; color: var(--primary-color); animation: waveMove 1.5s infinite; opacity: 0; }
+@keyframes pulseGlow { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.5); opacity: 0.9; } }
+@keyframes waveMove { 0% { transform: translateX(0); opacity: 1; } 100% { transform: translateX(30px); opacity: 0; } }
+.anim-ikhfa { display: none; position: relative; align-items: center; justify-content: center; width: 100%; height: 100%; }
+.ikhfa-char { font-family: var(--font-arabic); font-size: 5rem; color: #fff; z-index: 1; }
+.ikhfa-cloud { font-size: 7rem; color: var(--primary-color); position: absolute; z-index: 2; filter: drop-shadow(0 0 10px #000); animation: fogMove 4s infinite alternate; opacity: 0.85; }
+@keyframes fogMove { 0% { transform: translateX(-40px); } 100% { transform: translateX(40px); } }
+.anim-idgham { display: none; align-items: center; justify-content: center; width: 100%; height: 100%; gap: 50px; }
+.block-1, .block-2 { font-family: var(--font-arabic); font-size: 4rem; width: 80px; height: 80px; border-radius: 15px; display: flex; justify-content: center; align-items: center; color: #fff; position: absolute; }
+.block-1 { background: #ef4444; animation: slideMerge1 3s infinite; }
+.block-2 { background: var(--primary-color); animation: slideMerge2 3s infinite; }
+@keyframes slideMerge1 { 0%, 20% { transform: translateX(-60px); opacity: 1; } 50%, 80% { transform: translateX(0); opacity: 0; } 100% { transform: translateX(-60px); opacity: 1; } }
+@keyframes slideMerge2 { 0%, 20% { transform: translateX(60px); background: var(--primary-color); } 50%, 80% { transform: translateX(0); background: linear-gradient(45deg, #ef4444, var(--primary-color)); box-shadow: 0 0 30px var(--primary-color); } 100% { transform: translateX(60px); background: var(--primary-color); } }
+.blogger-hidden { display: none !important; }
+]]></b:skin>
+</head>
+<body>
+
+  <div class='blogger-hidden'><b:section id='main' showaddelement='false'/></div>
+
+  <div class='main-stage'>
+    <div class='lesson-header' onclick='handleAdminTap()'>
+      <h1 class='lesson-title' id='displayTitle'>Loading...</h1>
+    </div>
+    <div class='qaida-grid' id='qaidaGrid'/>
+  </div>
+
+  <div class='bottom-nav'>
+    <button class='nav-btn' onclick='openModal(&apos;lessonsModal&apos;)'>
+      <i class='fa-solid fa-list-ul'/><span>Lessons</span>
+    </button>
+    <button class='nav-btn' onclick='openModal(&apos;rulesModal&apos;); switchRule(&apos;qalqala&apos;);'>
+      <i class='fa-solid fa-shapes'/><span>Rules Anim</span>
+    </button>
+    <button class='nav-btn play-btn' onclick='startQuiz()'>
+      <i class='fa-solid fa-gamepad'/><span>Quiz</span>
+    </button>
+    <button class='nav-btn' onclick='openModal(&apos;settingsModal&apos;)'>
+      <i class='fa-solid fa-gear'/><span>Settings</span>
+    </button>
+  </div>
+
+  <div class='modal-overlay' id='lessonsModal'>
+    <div class='modal-content'>
+      <button class='close-modal' onclick='closeModal(&apos;lessonsModal&apos;)'><i class='fa-solid fa-xmark'/></button>
+      <h2 style='margin-top:0;'>Select Lesson</h2>
+      <div id='lessonsContainer'/>
+    </div>
+  </div>
+
+  <div class='modal-overlay' id='settingsModal'>
+    <div class='modal-content'>
+      <button class='close-modal' onclick='closeModal(&apos;settingsModal&apos;)'><i class='fa-solid fa-xmark'/></button>
+      <h2 style='margin-top:0;'>Personalize App</h2>
+      
+      <div class='settings-group admin-only admin-block'>
+        <h3><i class='fa-solid fa-font'/> Arabic Fonts</h3>
+        <div class='opt-grid three' id='fontGrid'>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-amiri&apos;, this)'>Amiri</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-noto&apos;, this)'>Noto Naskh</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-scheherazade&apos;, this)'>Scheherazade</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-reem&apos;, this)'>Reem Kufi</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-lateef&apos;, this)'>Lateef</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-harmattan&apos;, this)'>Harmattan</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-katibeh&apos;, this)'>Katibeh</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-mirza&apos;, this)'>Mirza</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-aref&apos;, this)'>Aref Ruqaa</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-tajawal&apos;, this)'>Tajawal</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-cairo&apos;, this)'>Cairo</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-almarai&apos;, this)'>Almarai</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-markazi&apos;, this)'>Markazi Text</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-vazirmatn&apos;, this)'>Vazirmatn</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;font&apos;, &apos;font-messiri&apos;, this)'>El Messiri</button>
+        </div>
+      </div>
+
+      <div class='settings-group admin-only admin-block'>
+        <h3><i class='fa-solid fa-plus'/> Admin: Add Custom Font</h3>
+        <input class='builder-input' id='customFontAdd' placeholder='Font Name (e.g., Roboto)' type='text'/>
+        <button class='admin-btn' onclick='addCustomFont()'>Add Font to App</button>
+      </div>
+
+      <div class='settings-group'>
+        <h3><i class='fa-solid fa-moon'/> Base Theme</h3>
+        <div class='opt-grid three'>
+          <button class='toggle-btn' onclick='setSetting(&apos;theme&apos;, &apos;theme-dark&apos;, this)'><i class='fa-solid fa-moon'/> Dark</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;theme&apos;, &apos;theme-light&apos;, this)'><i class='fa-solid fa-sun'/> Light</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;theme&apos;, &apos;theme-neon&apos;, this)'><i class='fa-solid fa-bolt'/> Neon</button>
+        </div>
+      </div>
+
+      <div class='settings-group'>
+        <h3><i class='fa-solid fa-wand-magic-sparkles'/> Click Effect Mode</h3>
+        <div class='opt-grid'>
+          <button class='toggle-btn' onclick='setSetting(&apos;effect&apos;, &apos;none&apos;, this)'><i class='fa-solid fa-ban'/> Normal Mode</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;effect&apos;, &apos;glow&apos;, this)'><i class='fa-solid fa-star'/> Glow Mode</button>
+        </div>
+      </div>
+
+      <div class='settings-group'>
+        <h3><i class='fa-solid fa-palette'/> App Colors</h3>
+        <div class='color-picker'>
+          <button class='color-dot' onclick='setThemeColor(&apos;#00e5ff&apos;, &apos;rgba(0, 229, 255, 0.4)&apos;)' style='background:#00e5ff;'/>
+          <button class='color-dot' onclick='setThemeColor(&apos;#10b981&apos;, &apos;rgba(16, 185, 129, 0.4)&apos;)' style='background:#10b981;'/>
+          <button class='color-dot' onclick='setThemeColor(&apos;#f59e0b&apos;, &apos;rgba(245, 158, 11, 0.4)&apos;)' style='background:#f59e0b;'/>
+          <button class='color-dot' onclick='setThemeColor(&apos;#ec4899&apos;, &apos;rgba(236, 72, 153, 0.4)&apos;)' style='background:#ec4899;'/>
+          <button class='color-dot' onclick='setThemeColor(&apos;#8b5cf6&apos;, &apos;rgba(139, 92, 246, 0.4)&apos;)' style='background:#8b5cf6;'/>
+          <button class='color-dot' onclick='setThemeColor(&apos;#ef4444&apos;, &apos;rgba(239, 68, 68, 0.4)&apos;)' style='background:#ef4444;'/>
+        </div>
+      </div>
+      
+      <div class='settings-group'>
+        <h3><i class='fa-solid fa-a'/> Default Letter Colors</h3>
+        <div class='color-picker'>
+          <button class='color-dot' onclick='setLetterColor(&apos;inherit&apos;)' style='background:#ffffff; border:1px solid #333;'/>
+          <button class='color-dot' onclick='setLetterColor(&apos;#f1c40f&apos;)' style='background:#f1c40f;'/>
+          <button class='color-dot' onclick='setLetterColor(&apos;#e74c3c&apos;)' style='background:#e74c3c;'/>
+          <button class='color-dot' onclick='setLetterColor(&apos;#3498db&apos;)' style='background:#3498db;'/>
+          <button class='color-dot' onclick='setLetterColor(&apos;#2ecc71&apos;)' style='background:#2ecc71;'/>
+        </div>
+      </div>
+
+      <!-- Modified: Shape Settings moved to Admin Only -->
+      <div class='settings-group admin-only admin-block'>
+        <h3><i class='fa-solid fa-shapes'/> Letter Box Shapes (Admin Sync)</h3>
+        <div class='opt-grid three' style='margin-bottom:10px;'>
+          <button class='toggle-btn' onclick='setSetting(&apos;shape&apos;, &apos;shape-square&apos;, this)'><i class='fa-regular fa-square'/> Square</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;shape&apos;, &apos;shape-rounded&apos;, this)'><i class='fa-solid fa-square'/> Rounded</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;shape&apos;, &apos;shape-circle&apos;, this)'><i class='fa-regular fa-circle'/> Circle</button>
+        </div>
+        <div class='opt-grid three'>
+          <button class='toggle-btn' onclick='setSetting(&apos;shape&apos;, &apos;shape-leaf&apos;, this)'><i class='fa-solid fa-leaf'/> Leaf</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;shape&apos;, &apos;shape-pill&apos;, this)'><i class='fa-solid fa-capsules'/> Pill</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;shape&apos;, &apos;shape-arch&apos;, this)'><i class='fa-solid fa-archway'/> Arch</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;shape&apos;, &apos;shape-inv-arch&apos;, this)'><i class='fa-solid fa-vihara'/> Shield</button>
+          <button class='toggle-btn' onclick='setSetting(&apos;shape&apos;, &apos;shape-blob&apos;, this)'><i class='fa-solid fa-droplet'/> Blob</button>
+        </div>
+      </div>
+
+      <div class='settings-group admin-only admin-block'>
+        <h3><i class='fa-solid fa-text-height'/> Global Box Height</h3>
+        <input class='builder-input' id='globalBoxHeight' onchange='setGlobalBoxHeight(this.value)' placeholder='e.g., 160px' type='text'/>
+      </div>
+
+      <div class='settings-group admin-only admin-block'>
+        <h3><i class='fa-solid fa-image'/> Background Controls</h3>
+        <div class='bg-preset-grid'>
+          <div class='bg-preset' onclick='applyCustomBackground(&apos;https://images.unsplash.com/photo-1574515598688-662580dfbf30?w=500&amp;q=80&apos;)' style='background-image:url(https://images.unsplash.com/photo-1574515598688-662580dfbf30?w=200&amp;q=80);'/>
+          <div class='bg-preset' onclick='applyCustomBackground(&apos;https://images.unsplash.com/photo-1519817650390-64a93db51149?w=500&amp;q=80&apos;)' style='background-image:url(https://images.unsplash.com/photo-1519817650390-64a93db51149?w=200&amp;q=80);'/>
+          <div class='bg-preset' onclick='applyCustomBackground(&apos;https://images.unsplash.com/photo-1584282877543-98211db4df74?w=500&amp;q=80&apos;)' style='background-image:url(https://images.unsplash.com/photo-1584282877543-98211db4df74?w=200&amp;q=80);'/>
+          <div class='bg-preset' onclick='applyCustomBackground(&apos;https://images.unsplash.com/photo-1601666352934-2e9202ed9994?w=500&amp;q=80&apos;)' style='background-image:url(https://images.unsplash.com/photo-1601666352934-2e9202ed9994?w=200&amp;q=80);'/>
+          <div class='bg-preset' onclick='applyCustomBackground(&apos;https://images.unsplash.com/photo-1557683311-eac922347aa1?w=500&amp;q=80&apos;)' style='background-image:url(https://images.unsplash.com/photo-1557683311-eac922347aa1?w=200&amp;q=80);'/>
+        </div>
+        
+        <label class='file-upload-label'>
+          <i class='fa-solid fa-upload'/> Select from Device
+          <input accept='image/*' id='bgFileInput' onchange='handleBgUpload(event)' type='file'/>
+        </label>
+        
+        <div class='opt-grid'>
+          <button class='admin-btn' onclick='generateAiBackground()' style='background:#8b5cf6; margin:0;'><i class='fa-solid fa-wand-magic-sparkles'/> AI Generate</button>
+          <button class='admin-btn danger' onclick='clearCustomBackground()' style='margin:0;'>Clear</button>
+        </div>
+      </div>
+
+      <div class='settings-group admin-only admin-block'>
+        <h3><i class='fa-solid fa-star'/> 3-Clicks Particle Settings</h3>
+        <label style='display:block;margin-bottom:5px;'>Enable Particles:</label>
+        <button class='toggle-btn' id='particleToggleBtn' onclick='toggleParticles()' style='margin-bottom:10px;'>ON</button>
+        
+        <label style='display:block;margin-bottom:5px;'>Particle Style:</label>
+        <select class='builder-input' id='particleType' onchange='setParticleType(this.value)'>
+           <option value='confetti'>Classic Confetti</option>
+           <option value='stars'>Premium Stars</option>
+           <option value='fireworks'>Fireworks Blast</option>
+           <option value='school'>School Pride (Dual Colors)</option>
+           <option value='snow'>Bubbles / Snow</option>
+        </select>
+      </div>
+
+      <div class='settings-group admin-only admin-block'>
+        <h3><i class='fa-solid fa-pen-to-square'/> Live Editor</h3>
+        <button class='admin-btn' onclick='openLetterEditor(-1)'>+ Add New Letter</button>
+        <button class='admin-btn' onclick='openLessonEditor(-1)' style='background:#10b981;'>+ Create Lesson</button>
+        <button class='admin-btn danger' onclick='resetDatabase()'>Reset Database</button>
+      </div>
+
+      <div class='settings-group admin-only admin-block'>
+        <h3><i class='fa-solid fa-hammer'/> Custom Quiz Builder</h3>
+        <p style='font-size:0.8rem; color:var(--text-muted);'>Create your own questions here</p>
+        <div id='customQuizContainer'/>
+        <button class='admin-btn' onclick='addCustomQuizQuestion()' style='background:#f59e0b;'>+ Add Quiz Question</button>
+      </div>
+    </div>
+  </div>
+
+  <div class='modal-overlay' id='lessonEditModal'>
+    <div class='modal-content'>
+      <button class='close-modal' onclick='closeModal(&apos;lessonEditModal&apos;)'><i class='fa-solid fa-xmark'/></button>
+      <h2 id='lessonEditTitle'>Create/Edit Lesson</h2>
+      <input id='lessonEditIndex' type='hidden' value='-1'/>
+      <div class='builder-item'>
+        <label>Lesson Title:</label>
+        <input class='builder-input' id='lessonTitleInput' type='text'/>
+        <label>Boxes Per Line (e.g., 1, 2, 3, 4) or Auto:</label>
+        <input class='builder-input' id='lessonBoxesPerLine' placeholder='e.g., 3' type='number'/>
+        <label>Default Box Width (optional, e.g. 200px or auto):</label>
+        <input class='builder-input' id='lessonBoxWidth' placeholder='auto' type='text'/>
+        <label>Default Font Size (e.g. 4rem):</label>
+        <input class='builder-input' id='lessonFontSize' placeholder='4rem' type='text'/>
+        <label>Lesson Custom Background (URL or hex color):</label>
+        <input class='builder-input' id='lessonBg' placeholder='Leave empty for global bg' type='text'/>
+        <label>Lesson Letters Color (e.g. #ff0000):</label>
+        <input class='builder-input' id='lessonLetterColor' placeholder='Leave empty for global' type='text'/>
+      </div>
+      <button class='admin-btn' onclick='saveLessonData()' style='background:#10b981;'>Save Lesson</button>
+    </div>
+  </div>
+
+  <div class='modal-overlay' id='letterEditModal'>
+    <div class='modal-content'>
+      <button class='close-modal' onclick='closeModal(&apos;letterEditModal&apos;)'><i class='fa-solid fa-xmark'/></button>
+      <h2 id='letterEditTitle'>Create/Edit Text</h2>
+      <input id='letterEditIndex' type='hidden' value='-1'/>
+      <div class='builder-item'>
+        <label>Arabic Text (Sentence or Letter):</label>
+        <input class='builder-input' id='letterCharInput' oninput='generateColorPickers()' type='text'/>
+        
+        <!-- Modified: Individual Character Color Editors -->
+        <label style='margin-top:15px;'><i class='fa-solid fa-palette'/> Pick Individual Colors (Optional):</label>
+        <div id='charColorEditors' style='display:flex; gap:10px; flex-wrap:wrap; margin-top:5px; margin-bottom:15px;'/>
+
+        <label>Name/Translation:</label>
+        <input class='builder-input' id='letterNameInput' type='text'/>
+        <label>Custom Box Width (overrides lesson):</label>
+        <input class='builder-input' id='letterBoxWidth' placeholder='e.g., 300px' type='text'/>
+        <label>Custom Font Size (overrides lesson):</label>
+        <input class='builder-input' id='letterFontSize' placeholder='e.g., 3rem' type='text'/>
+      </div>
+      <button class='admin-btn' onclick='saveLetterData()' style='background:#10b981;'>Save Text</button>
+    </div>
+  </div>
+
+  <div class='modal-overlay' id='quizModal'>
+    <div class='modal-content quiz-stage'>
+      <button class='close-modal' onclick='closeModal(&apos;quizModal&apos;)'><i class='fa-solid fa-xmark'/></button>
+      
+      <div class='trophy-container' id='trophyScreen'>
+         <i class='fa-solid fa-trophy trophy-icon'/>
+         <div class='winner-text'>You are Winner!</div>
+         <button class='admin-btn' onclick='closeTrophy()' style='margin-top:30px; max-width:200px;'>Play Again</button>
+      </div>
+
+      <h2>Qaida Quiz Challenge</h2>
+      <div class='quiz-header-buttons'>
+         <button class='quiz-mode-btn active' id='mode-auto' onclick='setQuizMode(&apos;auto&apos;)'>Auto Qaida</button>
+         <button class='quiz-mode-btn' id='mode-custom' onclick='setQuizMode(&apos;custom&apos;)'>Custom</button>
+         <button class='quiz-mode-btn' id='mode-ai' onclick='setQuizMode(&apos;ai&apos;)'><i class='fa-solid fa-robot'/> AI Quiz</button>
+      </div>
+
+      <div class='score-badge'>Score: <span id='quizScoreDisplay'>0</span> / 5</div>
+      <div class='quiz-char' id='quizChar' style='font-size: 2.5rem;'>Loading...</div>
+      <div class='quiz-options' id='quizOptions'/>
+    </div>
+  </div>
+
+  <div class='modal-overlay' id='rulesModal'>
+    <div class='modal-content'>
+      <button class='close-modal' onclick='closeModal(&apos;rulesModal&apos;)'><i class='fa-solid fa-xmark'/></button>
+      <h2 style='margin-top:0;'>Tajweed Visuals</h2>
+      <div class='rule-selectors'>
+        <button class='rule-btn active-rule' id='btn-qalqala' onclick='switchRule(&apos;qalqala&apos;)'>Qalqala</button>
+        <button class='rule-btn' id='btn-ghunna' onclick='switchRule(&apos;ghunna&apos;)'>Ghunna</button>
+        <button class='rule-btn' id='btn-ikhfa' onclick='switchRule(&apos;ikhfa&apos;)'>Ikhfa</button>
+        <button class='rule-btn' id='btn-idgham' onclick='switchRule(&apos;idgham&apos;)'>Idgham</button>
+      </div>
+      <div class='anim-stage-container'>
+        <div class='anim-qalqala' id='anim-qalqala' style='display:flex;'>
+          <div class='qalqala-ball'/><div class='qalqala-base'/><div class='qalqala-char'>ق</div>
+        </div>
+        <div class='anim-ghunna' id='anim-ghunna'>
+          <i class='fa-solid fa-head-side face-icon'/><div class='nose-glow'/><i class='fa-solid fa-wifi ghunna-waves'/>
+        </div>
+        <div class='anim-ikhfa' id='anim-ikhfa'>
+          <div class='ikhfa-char'>ت</div><i class='fa-solid fa-cloud ikhfa-cloud'/>
+        </div>
+        <div class='anim-idgham' id='anim-idgham'>
+          <div class='block-1'>ن</div><div class='block-2'>م</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    //<![CDATA[
+
+    /* ==========================================
+       FIREBASE CONFIGURATION (ADMIN SYNC)
+       ========================================== */
+    const firebaseConfig = {
+      apiKey: "AIzaSyBqHJ10lCOp3OXFJoOngdQRyWAyPd8WTH4",
+      authDomain: "qaidaapp-80bc4.firebaseapp.com",
+      databaseURL: "https://qaidaapp-80bc4-default-rtdb.firebaseio.com",
+      projectId: "qaidaapp-80bc4",
+      storageBucket: "qaidaapp-80bc4.firebasestorage.app",
+      messagingSenderId: "119081877504",
+      appId: "1:119081877504:web:2400c63109705da26118e5",
+      measurementId:"G-82PTN9W648"
+    };
+
+    // Initialize Firebase Database only if configured
+    if (!firebase.apps.length && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const database = (firebaseConfig.apiKey !== "YOUR_API_KEY") ? firebase.database() : null;
+
+    function syncFromFirebase() {
+      if(!database) return;
+      database.ref('qaidaAppData').once('value').then((snapshot) => {
+         const data = snapshot.val();
+         if(data) {
+            APP_DATA = data.db || APP_DATA;
+            if(data.shape) {
+               localStorage.setItem('qaida_shape', data.shape);
+               document.body.className = document.body.className.replace(/shape-\w+/g, '').trim();
+               document.body.classList.add(data.shape);
+               updateActiveButtons('shape', data.shape);
+            }
+            saveDBLocal(); // Save locally without pushing back
+            renderApp();
+         }
+      });
+    }
+
+    function pushToFirebase() {
+      if(!database || !isAdmin) return;
+      database.ref('qaidaAppData').set({
+         db: APP_DATA,
+         shape: localStorage.getItem('qaida_shape') || 'shape-rounded'
+      });
+    }
+    
+    /* Helper to remove HTML for text-to-speech and text extraction */
+    function stripHTML(html) {
+       let tmp = document.createElement("DIV");
+       tmp.innerHTML = html;
+       return tmp.textContent || tmp.innerText || "";
+    }
+    
+    function rgbToHex(color) {
+       if (!color) return "#ffffff";
+       if (color.startsWith('#')) {
+          return color.length === 4 ? "#" + color[1]+color[1]+color[2]+color[2]+color[3]+color[3] : color;
+       }
+       let ctx = document.createElement('canvas').getContext('2d');
+       ctx.fillStyle = color;
+       return ctx.fillStyle;
+    }
+    
+    /* ==========================================
+       ADMIN SECRETS & LOGIC
+       ========================================== */
+    let isAdmin = false;
+    let adminTaps = 0;
+    let adminTimer;
+
+    function handleAdminTap() {
+      adminTaps++;
+      clearTimeout(adminTimer);
+      adminTimer = setTimeout(() => { adminTaps = 0; }, 2000);
+      
+      if(adminTaps >= 5) {
+        adminTaps = 0;
+        let pwd = prompt("Enter Admin Password:");
+        if(pwd === "admin123") {
+          isAdmin = true;
+          document.body.classList.add('admin-mode');
+          alert("Admin Mode Unlocked!");
+          renderLessonsList(); // Show admin buttons in lesson list
+        } else {
+          alert("Incorrect Password!");
+        }
+      }
+    }
+
+    /* ==========================================
+       PARTICLE BLAST LOGIC (3 CLICKS)
+       ========================================== */
+    let letterClickCount = 0;
+    let isParticlesOn = localStorage.getItem('qaida_particles_on') !== 'false';
+    let savedParticleType = localStorage.getItem('qaida_particle_type') || 'confetti';
+
+    function toggleParticles() {
+      isParticlesOn = !isParticlesOn;
+      localStorage.setItem('qaida_particles_on', isParticlesOn);
+      document.getElementById('particleToggleBtn').innerText = isParticlesOn ? 'ON' : 'OFF';
+    }
+
+    function setParticleType(val) {
+      savedParticleType = val;
+      localStorage.setItem('qaida_particle_type', val);
+    }
+
+    function triggerParticles() {
+      if(!isParticlesOn) return;
+      let duration = 3000;
+      let end = Date.now() + duration;
+
+      if (savedParticleType === 'confetti') {
+          confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+      } else if (savedParticleType === 'stars') {
+          confetti({ particleCount: 100, spread: 80, shape: 'star', origin: { y: 0.6 } });
+      } else if (savedParticleType === 'fireworks') {
+          let interval = setInterval(function() {
+              if (Date.now() > end) return clearInterval(interval);
+              confetti({ startVelocity: 30, spread: 360, ticks: 60, zIndex: 300, particleCount: 50, origin: { x: Math.random(), y: Math.random() - 0.2 } });
+          }, 250);
+      } else if (savedParticleType === 'school') {
+          let colors = ['#00e5ff', '#ffffff'];
+          confetti({ particleCount: 150, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+          confetti({ particleCount: 150, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+      } else if (savedParticleType === 'snow') {
+          let interval = setInterval(function() {
+              if (Date.now() > end) return clearInterval(interval);
+              confetti({ particleCount: 20, startVelocity: 0, ticks: 200, origin: {x: Math.random(), y: 0}, colors: ['#ffffff'], shapes: ['circle'], gravity: 0.5, scalar: 0.8, drift: 1 });
+          }, 100);
+      }
+    }
+
+
+    /* ==========================================
+       GEMINI AI CONFIGURATION
+       ========================================== */
+    const GEMINI_API_KEY = "AQ.Ab8RN6LuMDBxNwNukLMcZ0IefS4-pX3FutiN_5EtgcyjJV-r9Q";
+    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=" + GEMINI_API_KEY;
+
+    /* ==========================================
+       1. ADVANCED DYNAMIC SETTINGS ENGINE
+       ========================================== */
+    const defaultSettings = {
+      theme: 'theme-dark',
+      font: 'font-amiri', 
+      shape: 'shape-rounded',
+      effect: 'glow'
+    };
+
+    function setSetting(type, val, btnElement) {
+      localStorage.setItem(`qaida_${type}`, val);
+      applyAllSettings();
+      if(btnElement) updateActiveButtons(type, val);
+      if(type === 'anim' || type === 'layout') renderApp(); 
+      // Admin syncs shape globally
+      if(type === 'shape' && isAdmin) pushToFirebase();
+    }
+
+    function applyAllSettings() {
+      document.body.className = isAdmin ? 'admin-mode ' : '';
+      Object.keys(defaultSettings).forEach(type => {
+        let val = localStorage.getItem(`qaida_${type}`) || defaultSettings[type];
+        document.body.classList.add(val);
+      });
+      loadCustomFonts();
+    }
+
+    function updateActiveButtons(type, activeVal) {
+      document.querySelectorAll(`[onclick*="setSetting('${type}'"]`).forEach(btn => {
+        if(btn.getAttribute('onclick').includes(activeVal)) {
+          btn.classList.add('active-opt');
+        } else {
+          btn.classList.remove('active-opt');
+        }
+      });
+    }
+
+    function setThemeColor(hex, glow) {
+      document.documentElement.style.setProperty('--primary-color', hex);
+      document.documentElement.style.setProperty('--primary-glow', glow);
+      localStorage.setItem('qaida_color', hex);
+      localStorage.setItem('qaida_glow', glow);
+    }
+    
+    function setLetterColor(color) {
+      document.documentElement.style.setProperty('--letter-color', color);
+      localStorage.setItem('qaida_letter_color', color);
+      renderApp(); // Refresh to apply immediately
+    }
+    
+    function setGlobalBoxHeight(val) {
+      if(!val) val = "160px";
+      document.documentElement.style.setProperty('--card-height', val);
+      localStorage.setItem('qaida_card_height', val);
+    }
+
+    // Add Admin Custom Fonts
+    let customFontsList = JSON.parse(localStorage.getItem('qaida_custom_fonts')) || [];
+    function addCustomFont() {
+      let fontName = document.getElementById('customFontAdd').value;
+      if(!fontName) return;
+      
+      let className = 'font-custom-' + Date.now();
+      customFontsList.push({ name: fontName, cssClass: className });
+      localStorage.setItem('qaida_custom_fonts', JSON.stringify(customFontsList));
+      
+      injectCustomFont(fontName, className);
+      alert("Font Added! Please select it from the list.");
+      document.getElementById('customFontAdd').value = "";
+    }
+    
+    function loadCustomFonts() {
+      customFontsList.forEach(f => injectCustomFont(f.name, f.cssClass));
+    }
+
+    function injectCustomFont(fontName, className) {
+      let link = document.createElement('link');
+      link.href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/ /g, '+')}&display=swap`;
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+      
+      let style = document.createElement('style');
+      style.innerHTML = `body.${className} { --font-arabic: '${fontName}', sans-serif; }`;
+      document.head.appendChild(style);
+      
+      let btn = document.createElement('button');
+      btn.className = 'toggle-btn admin-custom-font';
+      btn.innerText = fontName;
+      btn.onclick = function() { setSetting('font', className, this); };
+      document.getElementById('fontGrid').appendChild(btn);
+    }
+
+    // Background Handlers
+    function applyCustomBackground(url) {
+      if(url) {
+        document.body.style.backgroundImage = url.includes('linear-gradient') ? url : `url('${url}')`;
+        localStorage.setItem('qaida_bg', url);
+      } else {
+        document.body.style.backgroundImage = 'none';
+        localStorage.removeItem('qaida_bg');
+      }
+    }
+    
+    function handleBgUpload(event) {
+      const file = event.target.files[0];
+      if(file){
+        const reader = new FileReader();
+        reader.onload = function(e) { applyCustomBackground(e.target.result); }
+        reader.readAsDataURL(file);
+      }
+    }
+    function clearCustomBackground() { applyCustomBackground(null); renderApp(); }
+    async function generateAiBackground() {
+        if(GEMINI_API_KEY === "AQ.Ab8RN6LuMDBxNwNukLMcZ0IefS4-pX3FutiN_5EtgcyjJV-r9Q") { alert("Please put your Gemini API Key in the code first."); return; }
+        alert("Requesting AI for a new thematic background color...");
+        try {
+            const prompt = "Generate a beautiful CSS linear-gradient string for an Islamic Education app background. Return ONLY the CSS gradient value like 'linear-gradient(...)'.";
+            const response = await fetch(GEMINI_API_URL, {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+            const data = await response.json();
+            const bgCss = data.candidates[0].content.parts[0].text.trim();
+            document.body.style.backgroundImage = bgCss;
+            localStorage.setItem('qaida_bg', bgCss);
+        } catch(e) { alert("Error connecting to Gemini API."); }
+    }
+
+    /* ==========================================
+       2. DATABASE & UI LOGIC
+       ========================================== */
+    const DEFAULT_DB = [
+      { id: "l1", title: "Lesson 1: Mufridat", defaultBoxWidth: "auto", defaultFontSize: "", boxesPerLine: "", bg: "", letterColor: "", letters: [ { char: 'ا', name: 'Alif' }, { char: 'ب', name: 'Baa' }, { char: 'ت', name: 'Taa' } ] },
+      { id: "l2", title: "Lesson 2: Murakkabat", defaultBoxWidth: "250px", defaultFontSize: "", boxesPerLine: "", bg: "", letterColor: "", letters: [ { char: 'لا', name: 'Lam Alif' }, { char: 'با', name: 'Baa Alif' } ] }
+    ];
+
+    let APP_DATA = JSON.parse(localStorage.getItem('qaidaPro_db')) || DEFAULT_DB;
+    let currentLessonIndex = 0;
+
+    const qaidaGrid = document.getElementById('qaidaGrid');
+    const displayTitle = document.getElementById('displayTitle');
+    const lessonsContainer = document.getElementById('lessonsContainer');
+
+    window.onload = () => {
+      applyAllSettings();
+      Object.keys(defaultSettings).forEach(type => {
+        let val = localStorage.getItem(`qaida_${type}`) || defaultSettings[type];
+        updateActiveButtons(type, val);
+      });
+      const savedColor = localStorage.getItem('qaida_color') || '#00e5ff';
+      const savedGlow = localStorage.getItem('qaida_glow') || 'rgba(0, 229, 255, 0.4)';
+      setThemeColor(savedColor, savedGlow);
+      
+      const savedBoxHeight = localStorage.getItem('qaida_card_height') || '160px';
+      setGlobalBoxHeight(savedBoxHeight);
+      document.getElementById('globalBoxHeight').value = savedBoxHeight;
+
+      document.getElementById('particleToggleBtn').innerText = isParticlesOn ? 'ON' : 'OFF';
+      document.getElementById('particleType').value = savedParticleType;
+
+      renderCustomQuizBuilder();
+      renderApp(); 
+      syncFromFirebase(); // Fetch latest Admin Data
+    };
+
+    function saveDBLocal() {
+      localStorage.setItem('qaidaPro_db', JSON.stringify(APP_DATA));
+    }
+
+    function saveDB() {
+      saveDBLocal();
+      pushToFirebase(); // Send to Firebase if admin
+      renderApp();
+    }
+
+    function renderApp() {
+      if(!APP_DATA[currentLessonIndex]) currentLessonIndex = 0;
+      const lesson = APP_DATA[currentLessonIndex];
+      displayTitle.innerText = lesson.title;
+      qaidaGrid.innerHTML = '';
+      
+      if(lesson.bg && lesson.bg.trim() !== '') {
+          document.body.style.backgroundImage = lesson.bg.includes('linear-gradient') ? lesson.bg : `url('${lesson.bg}')`;
+      } else {
+          let globalBg = localStorage.getItem('qaida_bg');
+          if(globalBg) applyCustomBackground(globalBg);
+          else document.body.style.backgroundImage = 'none';
+      }
+      
+      if(lesson.letterColor && lesson.letterColor.trim() !== '') {
+          document.documentElement.style.setProperty('--letter-color', lesson.letterColor);
+      } else {
+          document.documentElement.style.setProperty('--letter-color', localStorage.getItem('qaida_letter_color') || 'inherit');
+      }
+
+      lesson.letters.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'letter-card';
+        card.style.animationDelay = `${index * 0.05}s`; 
+        
+        const bpl = parseInt(lesson.boxesPerLine);
+        const finalBoxWidth = item.boxWidth || lesson.defaultBoxWidth || "auto";
+
+        if(bpl && bpl > 0) {
+            const gapSum = (bpl - 1) * 20; 
+            card.style.width = `calc((100% - ${gapSum}px) / ${bpl})`;
+            card.style.minWidth = `calc((100% - ${gapSum}px) / ${bpl})`;
+            card.style.flex = "0 0 auto"; 
+        } else {
+            card.style.flex = "1 1 auto";
+            if (finalBoxWidth && finalBoxWidth !== "auto") {
+               card.style.width = finalBoxWidth;
+               card.style.minWidth = finalBoxWidth;
+               card.style.flex = "none"; 
+            }
+        }
+        
+        let finalFontSize = item.fontSize || lesson.defaultFontSize || "";
+        card.innerHTML = `<div class="arabic-char">${item.char}</div><div class="letter-name">${item.name}</div>`;
+        const charDiv = card.querySelector('.arabic-char');
+
+        if (finalFontSize) {
+           charDiv.style.fontSize = finalFontSize;
+        } else {
+           // Use stripped length for sizing
+           let rawLen = stripHTML(item.char).length;
+           if (rawLen > 4) {
+               let calcSize = Math.max(1.2, 5.5 - (rawLen * 0.2));
+               charDiv.style.fontSize = `${calcSize}rem`;
+           }
+        }
+        
+        card.addEventListener('click', () => {
+          let utterance = new SpeechSynthesisUtterance(stripHTML(item.char)); // Strip HTML for clear speech
+          utterance.lang = 'ar-SA';
+          window.speechSynthesis.speak(utterance);
+          
+          const effectVal = localStorage.getItem('qaida_effect') || 'glow';
+          if(effectVal !== 'none') {
+             card.classList.add(`effect-${effectVal}`);
+             setTimeout(() => { card.classList.remove(`effect-${effectVal}`); }, 500);
+          }
+
+          letterClickCount++;
+          if(letterClickCount >= 3) {
+             letterClickCount = 0;
+             triggerParticles();
+          }
+        });
+
+        card.addEventListener('contextmenu', (e) => {
+          if(!isAdmin) return; 
+          e.preventDefault();
+          const rawCharStr = stripHTML(item.char);
+          const action = prompt(`Type 'E' to Edit or 'D' to Delete "${rawCharStr}":`, "E");
+          if (action === 'D' || action === 'd') {
+            if(confirm(`Do you want to DELETE "${rawCharStr}"?`)) { lesson.letters.splice(index, 1); saveDB(); }
+          } else if (action === 'E' || action === 'e') {
+            openLetterEditor(index);
+          }
+        });
+        qaidaGrid.appendChild(card);
+      });
+      renderLessonsList();
+    }
+
+    function renderLessonsList() {
+      lessonsContainer.innerHTML = '';
+      APP_DATA.forEach((lesson, index) => {
+        const row = document.createElement('div');
+        row.style.display = 'flex'; row.style.gap = '10px'; row.style.marginBottom = '10px';
+        
+        const btn = document.createElement('button');
+        btn.className = 'lesson-list-btn'; btn.style.margin = '0'; btn.style.flex = '1';
+        btn.innerHTML = `<span>${lesson.title}</span> <i class="fa-solid fa-chevron-right"></i>`;
+        btn.onclick = () => { currentLessonIndex = index; renderApp(); closeModal('lessonsModal'); };
+        row.appendChild(btn);
+
+        if(isAdmin) {
+            const editBtn = document.createElement('button');
+            editBtn.className = 'nav-btn'; editBtn.style.background = 'var(--bg-panel)'; editBtn.style.padding = '15px'; editBtn.style.borderRadius = '12px'; editBtn.style.border = '1px solid var(--primary-color)'; editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
+            editBtn.onclick = () => { openLessonEditor(index); };
+            
+            const delBtn = document.createElement('button');
+            delBtn.className = 'nav-btn'; delBtn.style.background = '#ff4757'; delBtn.style.color = '#fff'; delBtn.style.padding = '15px'; delBtn.style.borderRadius = '12px'; delBtn.style.border = 'none'; delBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+            delBtn.onclick = () => { if(confirm("Are you sure?")) { APP_DATA.splice(index, 1); saveDB(); } };
+            
+            row.appendChild(editBtn); 
+            row.appendChild(delBtn);
+        }
+
+        lessonsContainer.appendChild(row);
+      });
+    }
+
+    /* Modals Control for Lesson & Letter Edit */
+    function openLessonEditor(index) {
+      document.getElementById('lessonEditIndex').value = index;
+      if (index === -1) {
+         document.getElementById('lessonEditTitle').innerText = "Create New Lesson";
+         document.getElementById('lessonTitleInput').value = "";
+         document.getElementById('lessonBoxesPerLine').value = "";
+         document.getElementById('lessonBoxWidth').value = "";
+         document.getElementById('lessonFontSize').value = "";
+         document.getElementById('lessonBg').value = "";
+         document.getElementById('lessonLetterColor').value = "";
+      } else {
+         document.getElementById('lessonEditTitle').innerText = "Edit Lesson";
+         const l = APP_DATA[index];
+         document.getElementById('lessonTitleInput').value = l.title;
+         document.getElementById('lessonBoxesPerLine').value = l.boxesPerLine || "";
+         document.getElementById('lessonBoxWidth').value = l.defaultBoxWidth || "";
+         document.getElementById('lessonFontSize').value = l.defaultFontSize || "";
+         document.getElementById('lessonBg').value = l.bg || "";
+         document.getElementById('lessonLetterColor').value = l.letterColor || "";
+      }
+      closeModal('settingsModal'); closeModal('lessonsModal'); openModal('lessonEditModal');
+    }
+
+    function saveLessonData() {
+      const index = parseInt(document.getElementById('lessonEditIndex').value);
+      const title = document.getElementById('lessonTitleInput').value || "Unnamed Lesson";
+      const bpl = document.getElementById('lessonBoxesPerLine').value;
+      const bw = document.getElementById('lessonBoxWidth').value;
+      const fs = document.getElementById('lessonFontSize').value;
+      const bg = document.getElementById('lessonBg').value;
+      const lc = document.getElementById('lessonLetterColor').value;
+      
+      if (index === -1) {
+         APP_DATA.push({ id: "l" + Date.now(), title, letters: [], boxesPerLine: bpl, defaultBoxWidth: bw, defaultFontSize: fs, bg: bg, letterColor: lc });
+         currentLessonIndex = APP_DATA.length - 1;
+      } else {
+         APP_DATA[index].title = title; 
+         APP_DATA[index].boxesPerLine = bpl; 
+         APP_DATA[index].defaultBoxWidth = bw; 
+         APP_DATA[index].defaultFontSize = fs;
+         APP_DATA[index].bg = bg;
+         APP_DATA[index].letterColor = lc;
+      }
+      saveDB(); closeModal('lessonEditModal');
+    }
+
+    // MULTI-COLOR LETTER EDITOR LOGIC
+    let letterColors = [];
+
+    function generateColorPickers(existingHTML = "") {
+       const rawStr = document.getElementById('letterCharInput').value;
+       const container = document.getElementById('charColorEditors');
+       container.innerHTML = "";
+       letterColors = new Array(rawStr.length).fill("");
+       
+       if(existingHTML && existingHTML.includes('<span')) {
+          let tmp = document.createElement('div');
+          tmp.innerHTML = existingHTML;
+          let chars = Array.from(tmp.childNodes);
+          let idx = 0;
+          chars.forEach(node => {
+             if(node.nodeType === 1) { // Element span
+                let text = node.innerText;
+                let color = node.style.color;
+                for(let i=0; i<text.length; i++) {
+                   if(idx < letterColors.length) letterColors[idx++] = color;
+                }
+             } else if (node.nodeType === 3) { // Pure text
+                let text = node.textContent;
+                for(let i=0; i<text.length; i++) {
+                   if(idx < letterColors.length) letterColors[idx++] = ""; 
+                }
+             }
+          });
+       }
+
+       for(let i=0; i<rawStr.length; i++) {
+          let char = rawStr[i];
+          let box = document.createElement('div');
+          box.style.display = "flex"; box.style.flexDirection = "column";
+          box.style.alignItems = "center"; box.style.background = "rgba(0,0,0,0.3)";
+          box.style.padding = "8px"; box.style.borderRadius = "8px"; box.style.minWidth = "40px";
+
+          let lbl = document.createElement('span');
+          lbl.innerText = char;
+          lbl.style.fontFamily = "var(--font-arabic)";
+          lbl.style.fontSize = "1.5rem";
+          lbl.style.marginBottom = "5px";
+          lbl.style.color = letterColors[i] || "var(--text-main)";
+          
+          let inp = document.createElement('input');
+          inp.type = "color";
+          inp.value = letterColors[i] ? rgbToHex(letterColors[i]) : "#ffffff";
+          inp.style.width = "25px"; inp.style.height = "25px";
+          inp.style.border = "none"; inp.style.cursor = "pointer"; inp.style.background = "none";
+          
+          inp.onchange = (e) => {
+             letterColors[i] = e.target.value;
+             lbl.style.color = e.target.value;
+          };
+
+          box.appendChild(lbl); box.appendChild(inp); container.appendChild(box);
+       }
+    }
+
+    function openLetterEditor(index) {
+      document.getElementById('letterEditIndex').value = index;
+      if (index === -1) {
+         document.getElementById('letterEditTitle').innerText = "Add New Text";
+         document.getElementById('letterCharInput').value = "";
+         document.getElementById('letterNameInput').value = "";
+         document.getElementById('letterBoxWidth').value = "";
+         document.getElementById('letterFontSize').value = "";
+         generateColorPickers("");
+      } else {
+         document.getElementById('letterEditTitle').innerText = "Edit Text";
+         const item = APP_DATA[currentLessonIndex].letters[index];
+         document.getElementById('letterCharInput').value = stripHTML(item.char);
+         document.getElementById('letterNameInput').value = item.name;
+         document.getElementById('letterBoxWidth').value = item.boxWidth || "";
+         document.getElementById('letterFontSize').value = item.fontSize || "";
+         generateColorPickers(item.char);
+      }
+      closeModal('settingsModal'); openModal('letterEditModal');
+    }
+
+    function saveLetterData() {
+      const index = parseInt(document.getElementById('letterEditIndex').value);
+      const rawChar = document.getElementById('letterCharInput').value;
+      const name = document.getElementById('letterNameInput').value;
+      const bw = document.getElementById('letterBoxWidth').value;
+      const fs = document.getElementById('letterFontSize').value;
+      
+      if(!rawChar || !name) { alert("Arabic text and name are required!"); return; }
+      
+      // Compile characters with individual spans if colored
+      let finalChar = "";
+      let hasCustomColor = false;
+      for(let i=0; i<rawChar.length; i++) {
+         if(letterColors[i] && letterColors[i] !== "#ffffff" && letterColors[i] !== "") {
+             finalChar += `<span style="color:${letterColors[i]}">${rawChar[i]}</span>`;
+             hasCustomColor = true;
+         } else {
+             finalChar += rawChar[i];
+         }
+      }
+      const charToSave = hasCustomColor ? finalChar : rawChar;
+
+      if (index === -1) {
+         APP_DATA[currentLessonIndex].letters.push({ char: charToSave, name, boxWidth: bw, fontSize: fs });
+      } else {
+         APP_DATA[currentLessonIndex].letters[index].char = charToSave;
+         APP_DATA[currentLessonIndex].letters[index].name = name;
+         APP_DATA[currentLessonIndex].letters[index].boxWidth = bw;
+         APP_DATA[currentLessonIndex].letters[index].fontSize = fs;
+      }
+      saveDB(); closeModal('letterEditModal');
+    }
+
+    function resetDatabase() { if(confirm("Are you sure?")) { APP_DATA = JSON.parse(JSON.stringify(DEFAULT_DB)); saveDB(); } }
+
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    /* ==========================================
+       3. QUIZ SYSTEM & TROPHY
+       ========================================== */
+    let quizMode = 'auto'; 
+    let currentStreak = 0;
+    
+    let customQuizzes = JSON.parse(localStorage.getItem('qaida_custom_quiz')) || [];
+    function renderCustomQuizBuilder() {
+       const container = document.getElementById('customQuizContainer');
+       container.innerHTML = '';
+       customQuizzes.forEach((quiz, index) => {
+           const div = document.createElement('div');
+           div.className = 'builder-item';
+           div.innerHTML = `
+              <input type="text" class="builder-input" value="${quiz.q}" onchange="updateQuizData(${index}, 'q', this.value)" placeholder="Question">
+              <input type="text" class="builder-input" value="${quiz.opts.join(',')}" onchange="updateQuizData(${index}, 'opts', this.value)" placeholder="Comma separated 4 options">
+              <input type="text" class="builder-input" value="${quiz.ans}" onchange="updateQuizData(${index}, 'ans', this.value)" placeholder="Correct Option Name">
+              <button class="admin-btn danger" onclick="deleteCustomQuiz(${index})">Delete</button>
+           `;
+           container.appendChild(div);
+       });
+    }
+    
+    function addCustomQuizQuestion() {
+       customQuizzes.push({q: "New Question?", opts: ["A", "B", "C", "D"], ans: "A"});
+       localStorage.setItem('qaida_custom_quiz', JSON.stringify(customQuizzes));
+       renderCustomQuizBuilder();
+    }
+    
+    function updateQuizData(index, field, value) {
+       if(field === 'opts') customQuizzes[index][field] = value.split(',');
+       else customQuizzes[index][field] = value;
+       localStorage.setItem('qaida_custom_quiz', JSON.stringify(customQuizzes));
+    }
+    
+    function deleteCustomQuiz(index) {
+       customQuizzes.splice(index, 1);
+       localStorage.setItem('qaida_custom_quiz', JSON.stringify(customQuizzes));
+       renderCustomQuizBuilder();
+    }
+
+    function setQuizMode(mode) {
+       quizMode = mode;
+       document.querySelectorAll('.quiz-mode-btn').forEach(btn => btn.classList.remove('active'));
+       document.getElementById('mode-' + mode).classList.add('active');
+       currentStreak = 0;
+       document.getElementById('quizScoreDisplay').innerText = '0';
+       generateQuiz();
+    }
+
+    function startQuiz() {
+      openModal('quizModal'); 
+      currentStreak = 0; document.getElementById('quizScoreDisplay').innerText = '0';
+      generateQuiz();
+    }
+
+    async function generateQuiz() {
+      const charDiv = document.getElementById('quizChar');
+      const optsDiv = document.getElementById('quizOptions');
+      optsDiv.innerHTML = '';
+      
+      if(quizMode === 'auto') {
+          charDiv.style.fontFamily = 'var(--font-arabic)';
+          charDiv.style.fontSize = '8rem';
+          const letters = APP_DATA[currentLessonIndex].letters;
+          if(letters.length < 4) { charDiv.innerText = "Need 4 letters!"; return; }
+          const correctItem = letters[Math.floor(Math.random() * letters.length)];
+          charDiv.innerHTML = correctItem.char; // Uses innerHTML to maintain colors
+          
+          let options = [correctItem];
+          while(options.length < 4) {
+            let rand = letters[Math.floor(Math.random() * letters.length)];
+            if(!options.includes(rand)) options.push(rand);
+          }
+          options.sort(() => Math.random() - 0.5);
+          options.forEach(opt => { createQuizBtn(opt.name, opt.name === correctItem.name); });
+          
+      } else if (quizMode === 'custom') {
+          charDiv.style.fontFamily = 'var(--font-arabic)';
+          charDiv.style.fontSize = '8rem';
+          if(customQuizzes.length === 0) { charDiv.innerText = "No custom questions added."; return; }
+          const q = customQuizzes[Math.floor(Math.random() * customQuizzes.length)];
+          charDiv.innerText = q.q;
+          q.opts.forEach(opt => { createQuizBtn(opt.trim(), opt.trim() === q.ans.trim()); });
+          
+      } else if (quizMode === 'ai') {
+          if(GEMINI_API_KEY === "AQ.Ab8RN6LuMDBxNwNukLMcZ0IefS4-pX3FutiN_5EtgcyjJV-r9Q") {
+              charDiv.style.fontFamily = 'var(--font-ui)';
+              charDiv.style.fontSize = '1.5rem';
+              charDiv.innerText = "Gemini API Key missing in Code!"; return;
+          }
+          charDiv.innerText = "Generating...";
+          try {
+              const prompt = "Generate exactly 1 multiple choice question about Quranic rules, Arabic alphabet, or Tajweed for a quiz game. Return ONLY valid JSON format like this: {\"question\":\"What is Alif?\", \"options\":[\"Letter\", \"Number\", \"Vowel\", \"Consonant\"], \"answer\":\"Letter\"}";
+              const response = await fetch(GEMINI_API_URL, {
+                  method: "POST", headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+              });
+              const data = await response.json();
+              let text = data.candidates[0].content.parts[0].text;
+              text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+              const quizData = JSON.parse(text);
+              
+              charDiv.style.fontFamily = 'var(--font-ui)'; charDiv.style.fontSize = '2rem';
+              charDiv.innerText = quizData.question;
+              quizData.options.forEach(opt => { createQuizBtn(opt, opt === quizData.answer); });
+          } catch(e) { charDiv.innerText = "AI Generation Failed."; }
+      }
+    }
+
+    function createQuizBtn(text, isCorrect) {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt-btn'; btn.innerText = text;
+        btn.onclick = () => {
+          if(isCorrect) {
+             btn.style.background = '#2ecc71'; btn.style.borderColor = '#2ecc71'; btn.style.color = '#fff';
+             currentStreak++;
+             document.getElementById('quizScoreDisplay').innerText = currentStreak;
+             if(currentStreak >= 5) { setTimeout(() => { document.getElementById('trophyScreen').style.display = 'flex'; }, 500); } 
+             else { setTimeout(generateQuiz, 1000); }
+          } else {
+             btn.style.background = '#e74c3c'; btn.style.borderColor = '#e74c3c'; btn.style.color = '#fff';
+             currentStreak = 0; document.getElementById('quizScoreDisplay').innerText = currentStreak;
+          }
+        };
+        document.getElementById('quizOptions').appendChild(btn);
+    }
+    
+    function closeTrophy() {
+        document.getElementById('trophyScreen').style.display = 'none';
+        currentStreak = 0; document.getElementById('quizScoreDisplay').innerText = '0'; generateQuiz();
+    }
+
+    /* ==========================================
+       4. TAJWEED ANIMATIONS 
+       ========================================== */
+    function switchRule(ruleId) {
+      document.querySelectorAll('.rule-btn').forEach(btn => btn.classList.remove('active-rule'));
+      document.getElementById('btn-' + ruleId).classList.add('active-rule');
+      document.getElementById('anim-qalqala').style.display = 'none';
+      document.getElementById('anim-ghunna').style.display = 'none';
+      document.getElementById('anim-ikhfa').style.display = 'none';
+      document.getElementById('anim-idgham').style.display = 'none';
+      document.getElementById('anim-' + ruleId).style.display = (ruleId === 'qalqala' || ruleId === 'idgham') ? 'flex' : 'block';
+    }
+    //]]>
+  </script>
+</body>
+</html>
